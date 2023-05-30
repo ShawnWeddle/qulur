@@ -1,38 +1,56 @@
+/* eslint-disable */
 import { useState } from "react";
-import { api } from "~/utils/api";
-import { createUserSchema } from "~/server/api/auth/schema";
+import { api, setToken } from "~/utils/api";
+import { logInUserSchema } from "~/server/api/auth/schema";
+import { useAuthContext } from "~/hooks/useAuthContext";
 
-const SignUpForm: React.FC = () => {
+const LogInForm: React.FC = () => {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [passwordConfirmation, setPasswordConfirmation] = useState<string>("");
   const [showPassword, setShowPassword] = useState<boolean>(true);
-  const [isSignedUp, setIsSignedUp] = useState<boolean>(false);
-  const [signUpErrors, setSignUpErrors] = useState<string[]>([]);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const [logInErrors, setLogInErrors] = useState<string[]>([]);
 
-  const registerUser = api.user.registerUser.useMutation();
+  const { authState, authDispatch } = useAuthContext();
+
+  const logInUser = api.user.logInUser.useMutation();
 
   const handleSubmit = () => {
-    const userValidation = createUserSchema.safeParse({
+    const userValidation = logInUserSchema.safeParse({
       username: username,
       password: password,
-      passwordConfirm: passwordConfirmation,
     });
     if (userValidation.success) {
-      registerUser.mutate(
+      logInUser.mutate(
         {
           username: username,
           password: password,
-          passwordConfirm: passwordConfirmation,
         },
         {
-          onSuccess() {
-            setSignUpErrors([]);
-            setIsSignedUp(true);
+          onSuccess(data) {
+            authDispatch({
+              type: "LOGIN",
+              payload: {
+                token: data.token,
+                userId: data.user.userId,
+                username: data.user.username,
+              },
+            });
+            localStorage.setItem(
+              "user",
+              JSON.stringify({
+                token: data.token,
+                userId: data.user.userId,
+                username: data.user.username,
+              })
+            );
+            setToken(data.token);
+            setLogInErrors([]);
+            setIsLoggedIn(true);
           },
           onError(error) {
             console.log(error);
-            setSignUpErrors(["This username is already taken"]);
+            setLogInErrors(["Unexpected Log In Error has occurred"]);
           },
         }
       );
@@ -40,11 +58,11 @@ const SignUpForm: React.FC = () => {
       const userValidationErrors = userValidation.error.issues.map((error) => {
         return error.message;
       });
-      setSignUpErrors(userValidationErrors);
+      setLogInErrors(userValidationErrors);
     }
   };
 
-  const signUpErrorList = signUpErrors.map((error, index) => {
+  const logInErrorList = logInErrors.map((error, index) => {
     return (
       <div key={index} className="m-1 rounded bg-red-50/70 px-2 text-red-600">
         * {error} *
@@ -71,18 +89,10 @@ const SignUpForm: React.FC = () => {
           onChange={(e) => setPassword(e.target.value)}
           value={password}
         />
-        <p className="text-lg font-semibold">Confirm Password</p>
-        <input
-          className="my-1 rounded bg-white/70 pl-1"
-          type={showPassword ? "text" : "password"}
-          placeholder="Confirm password "
-          onChange={(e) => setPasswordConfirmation(e.target.value)}
-          value={passwordConfirmation}
-        />
         <div></div>
         <div className="flex justify-center">
           <input
-            id="sign-up-show-password-input"
+            id="log-in-show-password-input"
             className="m-0.5"
             type="checkbox"
             checked={showPassword}
@@ -94,7 +104,7 @@ const SignUpForm: React.FC = () => {
               }
             }}
           />
-          <label htmlFor="sign-up-show-password-input" className="text-sm">
+          <label htmlFor="log-in-show-password-input" className="text-sm">
             Show Password
           </label>
         </div>
@@ -105,12 +115,12 @@ const SignUpForm: React.FC = () => {
           className="rounded-2xl bg-amber-300 p-3 text-3xl font-bold hover:text-gray-800"
           onClick={handleSubmit}
         >
-          SIGN UP
+          LOG IN
         </button>
       </div>
-      {signUpErrors && <div className="mx-1 mb-2">{signUpErrorList}</div>}
+      {logInErrors && <div className="mx-1 mb-2">{logInErrorList}</div>}
     </div>
   );
 };
 
-export default SignUpForm;
+export default LogInForm;

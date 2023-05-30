@@ -37,7 +37,15 @@ export const shuffleColorsAndShapes: ()=>ColorShapeGameBoard = () => {
   return {answerOrder: finalMatches, correctColor: correctColor, correctShape: correctShape, question: `Select the ${correctColor} ${correctShape}`, mode: "ColorShape"}
 }
 
-export const createQuizQuestions = () => {
+export const createFreePlayQuestions = () => {
+  const questionArray: ColorShapeGameBoard[] = []; 
+  for(let i=0; i<10; i++){
+    questionArray[i] = shuffleColorsAndShapes();
+  }
+  return questionArray;
+}
+
+export const createTestQuestions = () => {
   const questionArray: ColorShapeGameBoard[] = []; 
   for(let i=0; i<25; i++){
     questionArray[i] = shuffleColorsAndShapes();

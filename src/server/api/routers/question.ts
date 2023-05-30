@@ -1,16 +1,19 @@
 import {
   createTRPCRouter,
   publicProcedure,
-
 } from "~/server/api/trpc";
 
-import { shuffledQuestions } from "~/algorithms/shuffleAllQuestions";
+import { shuffledFreePlayQuestions, shuffledTestQuestions } from "~/algorithms/shuffleAllQuestions";
 
 export const questionRouter = createTRPCRouter({
-
-  getQuestion: publicProcedure.query(() => {
+  getFreePlayQuestions: publicProcedure.query(() => {
     return {
-      questions: shuffledQuestions
+      questions: shuffledFreePlayQuestions
+    }
+  }),
+  getTestQuestions: publicProcedure.query(() => {
+    return {
+      questions: shuffledTestQuestions
     }
   }),
 });

@@ -1,10 +1,23 @@
+/* eslint-disable */
 import { type NextPage } from "next";
+import { useEffect } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import MainLogo from "~/components/mainlogo";
+import { api, setToken } from "~/utils/api";
+import { UserType } from "~/context/AuthContext";
 
 const Home: NextPage = () => {
   const router = useRouter();
+
+  useEffect(() => {
+    const userCheck: string | null = localStorage.getItem("user");
+    const user: UserType | null = userCheck ? JSON.parse(userCheck) : null;
+    if (user) {
+      setToken(user.token);
+    }
+  }, []);
+
   return (
     <>
       <Head>

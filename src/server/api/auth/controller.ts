@@ -9,20 +9,18 @@ export const registerHandler = async ({
   input: CreateUserInput;
 }) => {
   try {
-    const userAlreadyExists = await findUniqueUser({ email: input.email });
+    const userAlreadyExists = await findUniqueUser({ username: input.username });
 
     if(userAlreadyExists){
       throw new TRPCError({
         code: "BAD_REQUEST",
-        message: 'This email is already in use',
+        message: 'Username is already taken',
       });
     }
 
     const hashedPassword = await bcrypt.hash(input.password, 10);
     const user = await createUser({
-      firstName: input.firstName,
-      lastName: input.lastName,
-      email: input.email,
+      username: input.username,
       password: hashedPassword
     });
 
@@ -43,7 +41,7 @@ export const loginHandler = async ({
   input: LoginUserInput
 }) => {
   try {
-    const user = await findUser({ email: input.email });
+    const user = await findUser({ username: input.username });
 
     if (!user || !(await bcrypt.compare(input.password, user.password))) {
       throw new TRPCError({
@@ -57,7 +55,7 @@ export const loginHandler = async ({
     return {
       status: 'success',
       token,
-      user: { firstName: user.firstName, lastName: user.lastName, email: user.email, userId: user.id}
+      user: {username: user.username, userId: user.id}
     };
   } catch (error) {
     throw error;

@@ -7,7 +7,6 @@ import type { Prisma, User } from '@prisma/client';
 const privateKey = env.PRIVATE_KEY;
 const publicKey = env.PUBLIC_KEY;
 
-
 export function signJwt(
   object: object, 
   options?: jwt.SignOptions | undefined

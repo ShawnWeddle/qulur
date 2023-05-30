@@ -1,17 +1,16 @@
 import { type NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import GameBoard from "~/components/gameBoard";
-import { MdAccountCircle } from "react-icons/md";
 import { ImArrowLeft } from "react-icons/im";
+import LogInForm from "~/components/logIn";
 
-const FreePlay: NextPage = () => {
+const LogIn: NextPage = () => {
   const router = useRouter();
   return (
     <>
       <Head>
-        <title>QULUR - Free Play</title>
-        <meta name="description" content="Qulur free play" />
+        <title>QULUR - Log In</title>
+        <meta name="description" content="Qulur log in" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="flex min-h-screen justify-center bg-gradient-to-b from-amber-100 to-amber-200">
@@ -23,16 +22,14 @@ const FreePlay: NextPage = () => {
             >
               <ImArrowLeft />
             </button>
-            <div className="transition hover:text-gray-800">FREE PLAY</div>
-            <button className="transition hover:scale-110 hover:text-gray-800">
-              <MdAccountCircle />
-            </button>
+            <div className="transition hover:text-gray-800">LOG IN</div>
+            <div></div>
           </nav>
-          <GameBoard mode="FREE PLAY" />
+          <LogInForm />
         </div>
       </main>
     </>
   );
 };
 
-export default FreePlay;
+export default LogIn;

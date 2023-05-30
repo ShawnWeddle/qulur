@@ -32,7 +32,15 @@ export const shuffleColors: ()=>ShuffledColorGameBoard = () => {
   return {answerOrder: colorOrder, correctColor: correctColor, question: "Select the word which matches its color", mode: "ShuffledColors"}
 }
 
-export const createQuizQuestions = () => {
+export const createFreePlayQuestions = () => {
+  const questionArray: ShuffledColorGameBoard[] = []; 
+  for(let i=0; i<10; i++){
+    questionArray[i] = shuffleColors();
+  }
+  return questionArray;
+}
+
+export const createTestQuestions = () => {
   const questionArray: ShuffledColorGameBoard[] = []; 
   for(let i=0; i<25; i++){
     questionArray[i] = shuffleColors();

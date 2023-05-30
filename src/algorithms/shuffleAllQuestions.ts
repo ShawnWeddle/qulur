@@ -1,11 +1,14 @@
 import {shuffle, concat} from "lodash";
 
 import {
-  createQuizQuestions as colorShapeQuizQuestions
+  createTestQuestions as colorShapeTestQuestions,
+  createFreePlayQuestions as colorShapeFreePlayQuestions,
 } from "~/algorithms/createColorShape";
 
 import {
-  createQuizQuestions as shuffledColorQuizQuestions
+  createTestQuestions as shuffledColorTestQuestions,
+  createFreePlayQuestions as shuffledColorFreePlayQuestions,
 } from "~/algorithms/createShuffledColors";
 
-export const shuffledQuestions = shuffle(concat([], [...colorShapeQuizQuestions(), ...shuffledColorQuizQuestions()]));
+export const shuffledFreePlayQuestions = shuffle(concat([], [...colorShapeFreePlayQuestions(), ...shuffledColorFreePlayQuestions()]));
+export const shuffledTestQuestions = shuffle(concat([], [...colorShapeTestQuestions(), ...shuffledColorTestQuestions()]));
