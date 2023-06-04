@@ -1,7 +1,7 @@
 import { type NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import GameBoard from "~/components/gameBoard";
+import TestGameBoard from "~/components/testGameBoard";
 import { MdAccountCircle } from "react-icons/md";
 import { ImArrowLeft } from "react-icons/im";
 
@@ -28,7 +28,7 @@ const Test: NextPage = () => {
               <MdAccountCircle />
             </button>
           </nav>
-          <GameBoard mode="TEST" />
+          <TestGameBoard />
         </div>
       </main>
     </>

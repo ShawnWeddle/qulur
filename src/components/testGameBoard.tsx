@@ -9,11 +9,7 @@ import type { ShuffledColorGameBoard } from "~/algorithms/createShuffledColors";
 
 type GameBoardState = ShuffledColorGameBoard | ColorShapeGameBoard;
 
-type GameBoardProps = {
-  mode: "FREE PLAY" | "TEST";
-};
-
-const GameBoard: React.FC<GameBoardProps> = (props: GameBoardProps) => {
+const TestGameBoard: React.FC = () => {
   const [gameStates, setGameStates] = useState<GameBoardState[]>();
   const [questionNumber, setQuestionNumber] = useState<number>(0);
   const [activeGameState, setActiveGameState] = useState<GameBoardState>();
@@ -23,18 +19,6 @@ const GameBoard: React.FC<GameBoardProps> = (props: GameBoardProps) => {
   const [endDate, setEndDate] = useState<number>(0);
   const [gameMode, setGameMode] = useState<"Start" | "Game" | "End">("Start");
   const [questionsLoaded, setQuestionsLoaded] = useState<boolean>(false);
-
-  const getFreePlayQuestions = api.question.getFreePlayQuestions.useQuery(
-    undefined,
-    {
-      onSuccess(data) {
-        const { questions } = data;
-        setGameStates(questions);
-        setActiveGameState(questions[questionNumber]);
-        setQuestionsLoaded(true);
-      },
-    }
-  );
 
   const getTestQuestions = api.question.getTestQuestions.useQuery(undefined, {
     onSuccess(data) {
@@ -46,15 +30,8 @@ const GameBoard: React.FC<GameBoardProps> = (props: GameBoardProps) => {
   });
 
   useEffect(() => {
-    switch (props.mode) {
-      case "FREE PLAY":
-        getFreePlayQuestions;
-        break;
-      case "TEST":
-        getTestQuestions;
-        break;
-    }
-  }, [props.mode, getFreePlayQuestions, getTestQuestions]);
+    getTestQuestions;
+  }, [getTestQuestions]);
 
   const handleAnswerClick = (color: string) => {
     if (color !== activeGameState?.correctColor) {
@@ -142,7 +119,7 @@ const GameBoard: React.FC<GameBoardProps> = (props: GameBoardProps) => {
       <div className="w-screen rounded bg-gradient-to-br from-amber-600/50 to-amber-700/50 sm:w-128">
         <div className="flex justify-between">
           <div className="m-3 text-xl font-bold sm:text-3xl">
-            {questionNumber + 1}/{props.mode === "FREE PLAY" ? 20 : 50}
+            {questionNumber + 1}/50
           </div>
           <div className="m-3 text-xl font-bold sm:text-3xl">
             {Math.floor((penalty + seconds) / 60)}
@@ -164,20 +141,9 @@ const GameBoard: React.FC<GameBoardProps> = (props: GameBoardProps) => {
     );
   } else {
     return (
-      <div className="w-screen rounded bg-gradient-to-br from-amber-600/50 to-amber-700/50 sm:w-128">
-        <div className="flex justify-between">
-          <div className="m-3 text-xl font-bold sm:text-3xl">
-            {questionNumber + 1}/50
-          </div>
-          <div className="m-3 text-xl font-bold sm:text-3xl"></div>
-        </div>
-        <div className="text-center text-xl font-bold">
-          Select the word that matches its color
-        </div>
-        <div className="grid grid-cols-2 text-xl font-bold">{answerBlocks}</div>
-      </div>
+      <div className="w-screen rounded bg-gradient-to-br from-amber-600/50 to-amber-700/50 sm:w-128"></div>
     );
   }
 };
 
-export default GameBoard;
+export default TestGameBoard;
