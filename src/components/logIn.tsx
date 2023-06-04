@@ -1,17 +1,17 @@
-/* eslint-disable */
 import { useState } from "react";
 import { api, setToken } from "~/utils/api";
 import { logInUserSchema } from "~/server/api/auth/schema";
 import { useAuthContext } from "~/hooks/useAuthContext";
+import { useRouter } from "next/router";
 
 const LogInForm: React.FC = () => {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [showPassword, setShowPassword] = useState<boolean>(true);
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const [logInErrors, setLogInErrors] = useState<string[]>([]);
 
-  const { authState, authDispatch } = useAuthContext();
+  const { authDispatch } = useAuthContext();
+  const router = useRouter();
 
   const logInUser = api.user.logInUser.useMutation();
 
@@ -46,10 +46,9 @@ const LogInForm: React.FC = () => {
             );
             setToken(data.token);
             setLogInErrors([]);
-            setIsLoggedIn(true);
+            void router.push("/");
           },
-          onError(error) {
-            console.log(error);
+          onError() {
             setLogInErrors(["Unexpected Log In Error has occurred"]);
           },
         }

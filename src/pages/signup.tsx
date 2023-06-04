@@ -3,9 +3,18 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { ImArrowLeft } from "react-icons/im";
 import SignUpForm from "~/components/signUp";
+import { useAuthContext } from "~/hooks/useAuthContext";
 
 const SignUp: NextPage = () => {
   const router = useRouter();
+  const { authState, authDispatch } = useAuthContext();
+  const user = authState.user;
+
+  const handleLogOut = () => {
+    localStorage.removeItem("user");
+    authDispatch({ type: "LOGOUT", payload: null });
+  };
+
   return (
     <>
       <Head>
@@ -25,7 +34,16 @@ const SignUp: NextPage = () => {
             <div className="transition hover:text-gray-800">SIGN UP</div>
             <div></div>
           </nav>
-          <SignUpForm />
+          {!user && <SignUpForm />}
+          {user && (
+            <div className="flex aspect-square w-screen flex-col items-center justify-center rounded bg-gradient-to-br from-amber-600/50 to-amber-700/50 sm:w-128">
+              <div className="m-4 text-center text-2xl font-semibold">
+                You are logged in as {user.username}. Please{" "}
+                <button onClick={handleLogOut}>Log Out</button> if you wish to
+                play as a different user.
+              </div>
+            </div>
+          )}
         </div>
       </main>
     </>

@@ -7,7 +7,11 @@ import { shapeDetermine } from "~/algorithms/shapeDetermine";
 import type { ColorShapeGameBoard } from "~/algorithms/createColorShape";
 import type { ShuffledColorGameBoard } from "~/algorithms/createShuffledColors";
 
+import type { colorList, shapeList } from "~/data/data";
+
 type GameBoardState = ShuffledColorGameBoard | ColorShapeGameBoard;
+type ColorType = (typeof colorList)[number];
+type ShapeType = (typeof shapeList)[number];
 
 const FreePlayGameBoard: React.FC = () => {
   const [gameStates, setGameStates] = useState<GameBoardState[]>();
@@ -36,9 +40,20 @@ const FreePlayGameBoard: React.FC = () => {
     getFreePlayQuestions;
   }, [getFreePlayQuestions]);
 
-  const handleAnswerClick = (color: string) => {
-    if (color !== activeGameState?.correctColor) {
-      setPenalty(penalty + 10);
+  const handleAnswerClick = (color: ColorType, shape?: ShapeType) => {
+    if (activeGameState?.mode === "ColorShape") {
+      if (shape) {
+        if (
+          shape !== activeGameState?.correctShape ||
+          color !== activeGameState?.correctColor
+        ) {
+          setPenalty(penalty + 10);
+        }
+      }
+    } else {
+      if (color !== activeGameState?.correctColor) {
+        setPenalty(penalty + 10);
+      }
     }
     const newQuestionNumber = questionNumber + 1;
     if (newQuestionNumber >= 50) {
@@ -91,7 +106,7 @@ const FreePlayGameBoard: React.FC = () => {
             key={index}
             className="col-span-2 m-3 flex aspect-square items-center justify-center rounded bg-amber-300 text-xl hover:outline hover:outline-4 hover:outline-white sm:text-5xl"
             onClick={() => {
-              handleAnswerClick(gameState[0]);
+              handleAnswerClick(gameState[0], gameState[2]);
             }}
           >
             <div className={gameState[1]}>

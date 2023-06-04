@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { api } from "~/utils/api";
 import { createUserSchema } from "~/server/api/auth/schema";
+import { useAuthContext } from "~/hooks/useAuthContext";
+import { useRouter } from "next/router";
 
 const SignUpForm: React.FC = () => {
   const [username, setUsername] = useState<string>("");
@@ -30,8 +32,7 @@ const SignUpForm: React.FC = () => {
             setSignUpErrors([]);
             setIsSignedUp(true);
           },
-          onError(error) {
-            console.log(error);
+          onError() {
             setSignUpErrors(["This username is already taken"]);
           },
         }
@@ -109,6 +110,7 @@ const SignUpForm: React.FC = () => {
         </button>
       </div>
       {signUpErrors && <div className="mx-1 mb-2">{signUpErrorList}</div>}
+      {isSignedUp && <div>Thank you for signing up! Please Log In </div>}
     </div>
   );
 };
