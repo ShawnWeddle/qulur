@@ -35,16 +35,23 @@ const Home: NextPage = () => {
             FREE PLAY
           </button>
         </div>
-        <div className="my-4 flex justify-between text-4xl font-bold transition hover:scale-110 hover:text-gray-800">
-          <button onClick={() => void router.push("/test")}>TEST</button>
-        </div>
+        {user && (
+          <div className="my-4 flex justify-between text-4xl font-bold transition hover:scale-110 hover:text-gray-800">
+            <button onClick={() => void router.push("/test")}>TEST</button>
+          </div>
+        )}
+        {!user && (
+          <div className="my-4 flex justify-between text-4xl font-bold transition hover:text-red-500">
+            <button disabled>TEST</button>
+          </div>
+        )}
         <div className="my-4 flex justify-between text-4xl font-bold transition hover:scale-110 hover:text-gray-800">
           <button onClick={() => void router.push("/howto")}>
             HOW TO PLAY
           </button>
         </div>
         <div className="my-4 flex justify-between text-4xl font-bold transition hover:scale-110 hover:text-gray-800">
-          <button onClick={() => void router.push("/howto")}>
+          <button onClick={() => void router.push("/leaderboard")}>
             LEADERBOARD
           </button>
         </div>

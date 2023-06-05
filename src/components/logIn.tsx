@@ -70,7 +70,7 @@ const LogInForm: React.FC = () => {
   });
 
   return (
-    <div className="flex aspect-square w-screen flex-col items-center justify-center rounded bg-gradient-to-br from-amber-600/50 to-amber-700/50 sm:w-128">
+    <div className="flex w-screen flex-col items-center justify-center rounded sm:w-128">
       <div className="m-5 grid grid-cols-2">
         <p className="text-lg font-semibold">Username</p>
         <input
@@ -111,7 +111,7 @@ const LogInForm: React.FC = () => {
       <div className="mb-2 flex justify-center">
         <button
           disabled={false}
-          className="rounded-2xl bg-amber-300 p-3 text-3xl font-bold hover:text-gray-800"
+          className="rounded-2xl bg-amber-300 p-3 text-3xl font-bold transition hover:bg-amber-400 hover:text-gray-800"
           onClick={handleSubmit}
         >
           LOG IN
