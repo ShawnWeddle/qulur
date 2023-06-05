@@ -1,5 +1,5 @@
-/* eslint-disable */
 import { createContext, useReducer, useEffect } from "react";
+import { setToken } from "~/utils/api";
 
 export const AuthContext = createContext<ContextType | null>(null);
 
@@ -40,10 +40,11 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
 
   useEffect(() => {
     const userCheck: string | null = localStorage.getItem("user");
-    const user: UserType | null = userCheck ? JSON.parse(userCheck) : null;
+    const user: UserType | null = userCheck ? JSON.parse(userCheck) : null; //eslint-disable-line
 
     if (user) {
       authDispatch({ type: "LOGIN", payload: user });
+      setToken(user.token);
     }
   }, []);
 

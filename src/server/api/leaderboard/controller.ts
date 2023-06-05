@@ -1,6 +1,6 @@
 import { createLeaderBoard, getLeaderBoard, deleteLeaderBoard } from "./service";
 import type { CreateLeaderBoardInput } from "./schema"; 
-import type { Score } from "@prisma/client";
+import type { Score, LeaderBoard } from "@prisma/client";
 
 export const createLeaderBoardHandler = async ({
   input
@@ -65,6 +65,7 @@ export const checkLeaderBoardHandler = async ({
   try {
     const scores = await getLeaderBoard();
     if(scores.length < 20){
+      console.log("Less than 20");
       const leaderBoard = await createLeaderBoard({
         username: input.username,
         time: input.time,

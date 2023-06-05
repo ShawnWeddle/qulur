@@ -9,7 +9,7 @@ export const leaderBoardRouter = createTRPCRouter({
     .mutation(({input}) => createLeaderBoardHandler({input})),*/
 
   getLeaderBoard: publicProcedure
-    .query(()=> getLeaderBoardHandler),
+    .query(()=> getLeaderBoardHandler()),
 
   checkLeaderBoard: privateProcedure
     .input(createLeaderBoardSchema)
