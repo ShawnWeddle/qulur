@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-
+import { useAuthContext } from "~/hooks/useAuthContext";
 import { api } from "~/utils/api";
 
 import { shapeDetermine } from "~/algorithms/shapeDetermine";
@@ -8,6 +8,7 @@ import type { ColorShapeGameBoard } from "~/algorithms/createColorShape";
 import type { ShuffledColorGameBoard } from "~/algorithms/createShuffledColors";
 
 import type { colorList, shapeList } from "~/data/data";
+import type { UserType } from "~/context/AuthContext";
 
 type GameBoardState = ShuffledColorGameBoard | ColorShapeGameBoard;
 type ColorType = (typeof colorList)[number];
@@ -24,6 +25,9 @@ const TestGameBoard: React.FC = () => {
   const [gameMode, setGameMode] = useState<"Start" | "Game" | "End">("Start");
   const [questionsLoaded, setQuestionsLoaded] = useState<boolean>(false);
 
+  const { authState } = useAuthContext();
+  const user = authState.user;
+
   const getTestQuestions = api.question.getTestQuestions.useQuery(undefined, {
     onSuccess(data) {
       const { questions } = data;
@@ -32,6 +36,8 @@ const TestGameBoard: React.FC = () => {
       setQuestionsLoaded(true);
     },
   });
+
+  const postTestScore = api.score.postScore.useMutation();
 
   useEffect(() => {
     getTestQuestions;
@@ -63,6 +69,14 @@ const TestGameBoard: React.FC = () => {
     }
   };
 
+  const handlePostScore = (user: UserType, time: number) => {
+    postTestScore.mutate({
+      username: user.username,
+      userId: user.userId,
+      time: time,
+    });
+  };
+
   const handleGameStart = () => {
     setGameMode("Game");
     const startTime = Date.now();
@@ -80,8 +94,11 @@ const TestGameBoard: React.FC = () => {
   const handleGameEnd = () => {
     setGameMode("End");
     const endTime = Date.now();
-    const fullTime = endTime - startDate;
-    console.log(fullTime);
+    const fullTime = endTime - startDate + penalty * 1000;
+    if (user) {
+      handlePostScore(user, fullTime);
+    }
+    setEndDate(fullTime);
   };
 
   const answerBlocks = activeGameState?.answerOrder.map((gameState, index) => {
@@ -150,8 +167,11 @@ const TestGameBoard: React.FC = () => {
     );
   } else if (gameMode === "End") {
     return (
-      <div className="w-screen rounded bg-gradient-to-br from-amber-600/50 to-amber-700/50 sm:w-128">
-        <div></div>
+      <div className="flex aspect-square w-screen flex-col justify-center gap-6 rounded bg-gradient-to-br from-amber-600/50 to-amber-700/50 sm:w-128">
+        <p className="text-center text-4xl font-bold">Great job!</p>
+        <p className="text-center text-xl font-bold">
+          Your time is {endDate / 1000} seconds!
+        </p>
       </div>
     );
   } else {

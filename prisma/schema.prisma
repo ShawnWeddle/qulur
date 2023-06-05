@@ -8,7 +8,27 @@ datasource db {
 }
 
 model User {
-  id       String @id @default(auto()) @map("_id") @db.ObjectId
-  username String @unique
-  password String
+  id          String        @id @default(auto()) @map("_id") @db.ObjectId
+  username    String        @unique
+  password    String
+  scores      Score[]
+  LeaderBoard LeaderBoard[]
+}
+
+model Score {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String   @db.ObjectId
+  username  String
+  time      Int
+}
+
+model LeaderBoard {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String   @db.ObjectId
+  username  String
+  time      Int
 }

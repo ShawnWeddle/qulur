@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 const LogInForm: React.FC = () => {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [showPassword, setShowPassword] = useState<boolean>(true);
+  const [showPassword, setShowPassword] = useState<boolean>(false);
   const [logInErrors, setLogInErrors] = useState<string[]>([]);
 
   const { authDispatch } = useAuthContext();

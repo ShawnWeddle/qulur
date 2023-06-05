@@ -56,7 +56,7 @@ const FreePlayGameBoard: React.FC = () => {
       }
     }
     const newQuestionNumber = questionNumber + 1;
-    if (newQuestionNumber >= 50) {
+    if (newQuestionNumber >= 20) {
       handleGameEnd();
     } else {
       if (gameStates) {
@@ -84,6 +84,7 @@ const FreePlayGameBoard: React.FC = () => {
     setGameMode("End");
     const endTime = Date.now();
     const fullTime = endTime - startDate;
+    setEndDate(fullTime);
   };
 
   const answerBlocks = activeGameState?.answerOrder.map((gameState, index) => {
@@ -152,8 +153,11 @@ const FreePlayGameBoard: React.FC = () => {
     );
   } else if (gameMode === "End") {
     return (
-      <div className="w-screen rounded bg-gradient-to-br from-amber-600/50 to-amber-700/50 sm:w-128">
-        <div></div>
+      <div className="flex aspect-square w-screen flex-col justify-center gap-6 rounded bg-gradient-to-br from-amber-600/50 to-amber-700/50 sm:w-128">
+        <p className="text-center text-4xl font-bold">Great job!</p>
+        <p className="text-center text-xl font-bold">
+          Your time is {endDate / 1000} seconds!
+        </p>
       </div>
     );
   } else {

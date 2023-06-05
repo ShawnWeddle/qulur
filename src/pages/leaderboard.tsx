@@ -3,7 +3,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { MdAccountCircle } from "react-icons/md";
 import { ImArrowLeft } from "react-icons/im";
-import HowToPlayBoard from "~/components/howToPlay";
+import InnerLeaderBoard from "~/components/leaderboard";
 import SmallLogo from "~/components/smallLogo";
 
 const LeaderBoard: NextPage = () => {
@@ -25,11 +25,11 @@ const LeaderBoard: NextPage = () => {
               <ImArrowLeft />
             </button>
             <SmallLogo />
-
             <button className="transition hover:scale-110 hover:text-gray-800">
               <MdAccountCircle />
             </button>
           </nav>
+          <InnerLeaderBoard />
         </div>
       </main>
     </>
