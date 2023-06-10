@@ -1,7 +1,9 @@
 const HowToPlayBoard: React.FC = () => {
   return (
     <div className="w-screen bg-white/30 sm:w-128 sm:rounded-xl">
-      <p className="py-2 text-center text-6xl font-bold">HOW TO PLAY</p>
+      <p className="py-2 text-center text-4xl font-bold sm:text-6xl">
+        HOW TO PLAY
+      </p>
       <p className="p-4 text-xl font-semibold">
         In FREE PLAY mode, you will have to answer 20 questions.
       </p>

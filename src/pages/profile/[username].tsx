@@ -35,6 +35,7 @@ const ProfilePage: NextPage = () => {
                 className="text-center hover:underline"
                 onClick={() => {
                   authDispatch({ type: "LOGOUT", payload: null });
+                  void router.push("/");
                 }}
               >
                 Log Out

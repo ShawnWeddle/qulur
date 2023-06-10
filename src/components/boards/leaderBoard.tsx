@@ -71,7 +71,9 @@ const InnerLeaderBoard: React.FC = () => {
 
   return (
     <div className="w-screen bg-white/30 sm:w-128 sm:rounded-xl">
-      <p className="py-2 text-center text-6xl font-bold">LEADERBOARD</p>
+      <p className="py-2 text-center text-4xl font-bold sm:text-6xl">
+        LEADERBOARD
+      </p>
       {!fetchError && <div>{LeaderBoard}</div>}
       {fetchError && <div>OOPS!</div>}
       <div className="h-4"></div>

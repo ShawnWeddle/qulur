@@ -22,7 +22,7 @@ const Nav: React.FC<NavProps> = (props: NavProps) => {
   };
 
   return (
-    <nav className="my-4 flex justify-between text-6xl font-bold">
+    <nav className="my-4 flex justify-around text-4xl font-bold sm:justify-between sm:text-6xl">
       <button
         className="transition hover:scale-110 hover:text-gray-800"
         onClick={() => void router.push("/")}

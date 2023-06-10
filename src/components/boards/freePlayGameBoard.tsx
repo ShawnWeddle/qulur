@@ -93,7 +93,7 @@ const FreePlayGameBoard: React.FC = () => {
         return (
           <div
             key={index}
-            className="col-span-3 m-3 flex aspect-square items-center justify-center rounded bg-amber-300 text-xl hover:outline hover:outline-4 hover:outline-white sm:text-3xl"
+            className="col-span-3 m-3 flex aspect-square items-center justify-center rounded bg-amber-300 text-3xl hover:outline hover:outline-4 hover:outline-white sm:text-4xl"
             onClick={() => {
               handleAnswerClick(gameState[0]);
             }}
@@ -105,7 +105,7 @@ const FreePlayGameBoard: React.FC = () => {
         return (
           <div
             key={index}
-            className="col-span-2 m-3 flex aspect-square items-center justify-center rounded bg-amber-300 text-xl hover:outline hover:outline-4 hover:outline-white sm:text-5xl"
+            className="col-span-2 m-3 flex aspect-square items-center justify-center rounded bg-amber-300 text-3xl hover:outline hover:outline-4 hover:outline-white sm:text-5xl"
             onClick={() => {
               handleAnswerClick(gameState[0], gameState[2]);
             }}
@@ -145,7 +145,7 @@ const FreePlayGameBoard: React.FC = () => {
             {(penalty + seconds) % 60}
           </div>
         </div>
-        <div className="text-center text-xl font-bold">
+        <div className="text-center text-lg font-bold sm:text-xl">
           {activeGameState?.question}
         </div>
         <div className="grid grid-cols-6 text-xl font-bold">{answerBlocks}</div>

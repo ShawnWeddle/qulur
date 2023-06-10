@@ -40,11 +40,11 @@ const UsernameBoard: React.FC<UsernameBoardProps> = (
   return (
     <div className="w-screen bg-white/30 sm:w-128 sm:rounded-xl">
       {props.username === user?.username ? (
-        <p className="text-center text-6xl font-bold text-red-500">
+        <p className="text-center text-4xl font-bold text-red-500 sm:text-6xl">
           {props.username.toUpperCase()}
         </p>
       ) : (
-        <p className="text-center text-6xl font-bold">
+        <p className="text-center text-4xl font-bold sm:text-6xl">
           {props.username.toUpperCase()}
         </p>
       )}
