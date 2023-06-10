@@ -14,6 +14,8 @@ const SignUpForm: React.FC = () => {
 
   const registerUser = api.user.registerUser.useMutation();
 
+  const router = useRouter();
+
   const handleSubmit = () => {
     const userValidation = createUserSchema.safeParse({
       username: username,
@@ -111,6 +113,17 @@ const SignUpForm: React.FC = () => {
       </div>
       {signUpErrors && <div className="mx-1 mb-2">{signUpErrorList}</div>}
       {isSignedUp && <div>Thank you for signing up! Please Log In </div>}
+      <div>
+        Already have an account?{" "}
+        <button
+          className="hover:underline"
+          onClick={() => {
+            void router.push("/login");
+          }}
+        >
+          Log In
+        </button>
+      </div>
     </div>
   );
 };

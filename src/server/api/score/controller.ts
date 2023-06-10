@@ -1,5 +1,5 @@
-import { createScore } from "./service";
-import type { CreateScoreInput} from "./schema"
+import { createScore, findScores } from "./service";
+import type { CreateScoreInput, UsernameInput} from "./schema"
 
 export const createScoreHandler = async ({
   input
@@ -27,3 +27,23 @@ export const createScoreHandler = async ({
     throw error;
   }
 };
+
+export const findScoresByUsernameHandler = async ({
+  input
+}: {
+  input: UsernameInput
+}) => {
+  try {
+    const scores = await findScores({
+      username: input
+    })
+    return{
+      status: "success",
+      data: {
+        scores
+      }
+    }
+  } catch (error) {
+    throw error;
+  }
+}

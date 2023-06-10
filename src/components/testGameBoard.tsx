@@ -80,14 +80,7 @@ const TestGameBoard: React.FC = () => {
       {
         onSuccess(data) {
           const { score } = data.data;
-          checkLeaderBoard.mutate(score, {
-            onSuccess(data, variables, context) {
-              console.log("IT worked", data?.data.leaderBoard);
-            },
-            onError(error) {
-              console.log(error);
-            },
-          });
+          checkLeaderBoard.mutate(score);
         },
       }
     );

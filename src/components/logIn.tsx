@@ -118,6 +118,17 @@ const LogInForm: React.FC = () => {
         </button>
       </div>
       {logInErrors && <div className="mx-1 mb-2">{logInErrorList}</div>}
+      <div>
+        Don&apos;t have an account?{" "}
+        <button
+          className="hover:underline"
+          onClick={() => {
+            void router.push("/signup");
+          }}
+        >
+          Sign Up
+        </button>
+      </div>
     </div>
   );
 };

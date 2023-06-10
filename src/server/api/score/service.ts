@@ -17,6 +17,16 @@ export const findScore = async (
   })) as Score;
 }
 
+export const findScores = async (
+  where: Prisma.ScoreWhereInput,
+  select?: Prisma.ScoreSelect
+) => {
+  return(await prisma.score.findMany({
+    where,
+    select
+  })) as Score[];
+}
+
 export const getAllScores = async () => {
   return (await prisma.score.findMany());
 }

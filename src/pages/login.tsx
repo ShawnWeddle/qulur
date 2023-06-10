@@ -36,7 +36,7 @@ const LogIn: NextPage = () => {
           </nav>
           {!user && <LogInForm />}
           {user && (
-            <div className="flex aspect-square w-screen flex-col items-center justify-center rounded bg-gradient-to-br from-amber-600/50 to-amber-700/50 sm:w-128">
+            <div className="w-screen rounded text-center sm:w-128">
               <div className="m-4 text-center text-2xl font-semibold">
                 You are logged in as {user.username}. Please{" "}
                 <button onClick={handleLogOut}>Log Out</button> if you wish to

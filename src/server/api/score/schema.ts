@@ -15,4 +15,9 @@ export const createScoreSchema = object({
   userId: string({ required_error: 'UserId is required' })
 });
 
+export const usernameSchema = string({
+  required_error: "Username is required"
+})
+
 export type CreateScoreInput = TypeOf<typeof createScoreSchema>;
+export type UsernameInput = TypeOf<typeof usernameSchema>;
