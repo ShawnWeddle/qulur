@@ -2,14 +2,15 @@ import { type NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { MdAccountCircle } from "react-icons/md";
-import { ImArrowLeft } from "react-icons/im";
-import SmallLogo from "~/components/smallLogo";
-import UsernameBoard from "~/components/usernameBoard";
+import { useAuthContext } from "~/hooks/useAuthContext";
+import UsernameBoard from "~/components/boards/usernameBoard";
+import Nav from "~/components/nav";
 
 const ProfilePage: NextPage = () => {
   const router = useRouter();
   const [username, setUsername] = useState<string>();
+  const { authState, authDispatch } = useAuthContext();
+  const user = authState.user;
 
   useEffect(() => {
     const testUsername = router.query.username;
@@ -26,19 +27,20 @@ const ProfilePage: NextPage = () => {
       </Head>
       <main className="flex min-h-screen justify-center bg-gradient-to-b from-amber-100 to-amber-200">
         <div>
-          <nav className="my-4 flex justify-between text-6xl font-bold">
-            <button
-              className="transition hover:scale-110 hover:text-gray-800"
-              onClick={() => void router.push("/")}
-            >
-              <ImArrowLeft />
-            </button>
-            <SmallLogo />
-            <button className="transition hover:scale-110 hover:text-gray-800">
-              <MdAccountCircle />
-            </button>
-          </nav>
+          <Nav mode="LOGO" />
           {username && <UsernameBoard username={username} />}
+          {user?.username === username && (
+            <div className="flex justify-center">
+              <button
+                className="text-center hover:underline"
+                onClick={() => {
+                  authDispatch({ type: "LOGOUT", payload: null });
+                }}
+              >
+                Log Out
+              </button>
+            </div>
+          )}
         </div>
       </main>
     </>

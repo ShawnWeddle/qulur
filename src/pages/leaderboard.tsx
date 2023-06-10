@@ -1,7 +1,7 @@
 import { type NextPage } from "next";
 import Head from "next/head";
 import Nav from "~/components/nav";
-import InnerLeaderBoard from "~/components/leaderboard";
+import InnerLeaderBoard from "~/components/boards/leaderBoard";
 
 const LeaderBoard: NextPage = () => {
   return (

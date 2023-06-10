@@ -6,7 +6,7 @@ import { useAuthContext } from "~/hooks/useAuthContext";
 
 const Home: NextPage = () => {
   const router = useRouter();
-  const { authState, authDispatch } = useAuthContext();
+  const { authState } = useAuthContext();
   const user = authState.user;
 
   return (

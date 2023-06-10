@@ -1,7 +1,7 @@
 import { type NextPage } from "next";
 import Head from "next/head";
 import Nav from "~/components/nav";
-import HowToPlayBoard from "~/components/howToPlay";
+import HowToPlayBoard from "~/components/boards/howToPlayBoard";
 
 const HowTo: NextPage = () => {
   return (
