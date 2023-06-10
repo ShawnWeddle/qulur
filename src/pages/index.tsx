@@ -8,6 +8,7 @@ const Home: NextPage = () => {
   const router = useRouter();
   const { authState } = useAuthContext();
   const user = authState.user;
+  console.log("Shawn");
 
   return (
     <>
