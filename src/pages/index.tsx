@@ -1,7 +1,7 @@
 import { type NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import MainLogo from "~/components/mainLogo";
+import MainLogo from "../components/mainLogo";
 import { useAuthContext } from "~/hooks/useAuthContext";
 
 const Home: NextPage = () => {
