@@ -1,14 +1,13 @@
 import { type NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import MainLogo from "../components/mainLogo";
+import MainLogo from "~/components/newLogo";
 import { useAuthContext } from "~/hooks/useAuthContext";
 
 const Home: NextPage = () => {
   const router = useRouter();
   const { authState } = useAuthContext();
   const user = authState.user;
-  console.log("Shawn");
 
   return (
     <>
