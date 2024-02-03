@@ -1,37 +1,34 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { api } from "~/utils/api";
 import { timeConversion } from "~/algorithms/timeConversion";
-import type { LeaderBoard } from "@prisma/client";
 import { useAuthContext } from "~/hooks/useAuthContext";
 import { useRouter } from "next/router";
+import LoadingIcon from "../loadingIcon";
 
 const InnerLeaderBoard: React.FC = () => {
-  const [leaderBoard, setLeaderBoard] = useState<LeaderBoard[]>([]);
-  const [fetchError, setFetchError] = useState<boolean>(false);
-
   const { authState } = useAuthContext();
   const user = authState.user;
 
   const router = useRouter();
 
-  const getLeaderBoard = api.leaderBoard.getLeaderBoard.useQuery(undefined, {
-    onSuccess(data) {
-      const { leaderBoard } = data;
-      leaderBoard.sort((a, b) => {
-        return a.time - b.time;
-      });
-      setLeaderBoard(leaderBoard);
-    },
-    onError() {
-      setFetchError(true);
-    },
-  });
+  const getLeaderBoard = api.score.getLeaderBoard.useQuery();
 
   useEffect(() => {
     getLeaderBoard;
   }, [getLeaderBoard]);
 
-  const LeaderBoard = leaderBoard.map((score, index) => {
+  if (!getLeaderBoard.data) {
+    return (
+      <div className="flex w-screen flex-col items-center bg-white/30 sm:w-128 sm:rounded-xl">
+        <p className="py-2 text-center text-4xl font-bold sm:text-6xl">
+          LEADERBOARD
+        </p>
+        <LoadingIcon />
+      </div>
+    );
+  }
+
+  const LeaderBoard = getLeaderBoard.data.map((score, index) => {
     const handleUsernameClick = (username: string) => {
       void router.push(`/profile/${username}`);
     };
@@ -74,9 +71,7 @@ const InnerLeaderBoard: React.FC = () => {
       <p className="py-2 text-center text-4xl font-bold sm:text-6xl">
         LEADERBOARD
       </p>
-      {!fetchError && <div>{LeaderBoard}</div>}
-      {fetchError && <div>OOPS!</div>}
-      <div className="h-4"></div>
+      <div>{LeaderBoard}</div>
     </div>
   );
 };

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { api } from "~/utils/api";
 import { timeConversion } from "~/algorithms/timeConversion";
 import { useAuthContext } from "~/hooks/useAuthContext";
+import LoadingIcon from "../loadingIcon";
 
 interface UsernameBoardProps {
   username: string;
@@ -37,6 +38,23 @@ const UsernameBoard: React.FC<UsernameBoardProps> = (
     getScores;
   }, [getScores]);
 
+  if (!getScores.data) {
+    return (
+      <div className="flex w-screen flex-col items-center bg-white/30 sm:w-128 sm:rounded-xl">
+        {props.username === user?.username ? (
+          <p className="text-center text-4xl font-bold text-red-500 sm:text-6xl">
+            {props.username.toUpperCase()}
+          </p>
+        ) : (
+          <p className="text-center text-4xl font-bold sm:text-6xl">
+            {props.username.toUpperCase()}
+          </p>
+        )}
+        <LoadingIcon />
+      </div>
+    );
+  }
+
   return (
     <div className="w-screen bg-white/30 sm:w-128 sm:rounded-xl">
       {props.username === user?.username ? (
@@ -56,7 +74,6 @@ const UsernameBoard: React.FC<UsernameBoardProps> = (
           <p>{timeConversion(fastestTime)}</p>
         </div>
       )}
-      {fetchError && <div>OOPS!</div>}
     </div>
   );
 };

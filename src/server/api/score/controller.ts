@@ -1,4 +1,4 @@
-import { createScore, findScores } from "./service";
+import { createScore, findScores, getAllScores } from "./service";
 import type { CreateScoreInput, UsernameInput} from "./schema"
 
 export const createScoreHandler = async ({
@@ -43,6 +43,16 @@ export const findScoresByUsernameHandler = async ({
         scores
       }
     }
+  } catch (error) {
+    throw error;
+  }
+}
+
+export const getLeaderBoard = async () => {
+  try {
+    const scores = await getAllScores();
+    const leaderBoard = scores.sort((a,b) => a.time - b.time).splice(0, 20);
+    return leaderBoard;
   } catch (error) {
     throw error;
   }

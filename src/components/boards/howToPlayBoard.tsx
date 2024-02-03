@@ -5,11 +5,11 @@ const HowToPlayBoard: React.FC = () => {
         HOW TO PLAY
       </p>
       <p className="p-4 text-xl font-semibold">
-        In FREE PLAY mode, you will have to answer 20 questions.
+        FREE PLAY: 20 questions. Scores are not recorded.
       </p>
       <p className="p-4 text-xl font-semibold">
-        In TEST mode, you will have to answer 50 questions. You must be logged
-        in to play TEST mode.
+        TEST: 50 questions. Scores are recorded. You must be logged in to play
+        TEST mode.
       </p>
       <p className="p-4 text-xl font-semibold">
         If you answer a question incorrectly, ten seconds will be added to your

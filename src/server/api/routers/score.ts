@@ -1,5 +1,5 @@
 import { createScoreSchema, usernameSchema } from "../score/schema";
-import { createScoreHandler, findScoresByUsernameHandler } from "../score/controller";
+import { createScoreHandler, findScoresByUsernameHandler, getLeaderBoard } from "../score/controller";
 
 import { createTRPCRouter, privateProcedure, publicProcedure } from "../trpc";
 
@@ -10,6 +10,9 @@ export const scoreRouter = createTRPCRouter({
 
   findScoresByUsername: publicProcedure
   .input(usernameSchema)
-  .query(({input}) => findScoresByUsernameHandler({input}))
+  .query(({ input }) => findScoresByUsernameHandler({ input })),
+
+  getLeaderBoard: publicProcedure
+  .query(()=> getLeaderBoard())
 }
 );

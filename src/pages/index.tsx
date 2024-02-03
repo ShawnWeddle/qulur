@@ -29,8 +29,10 @@ const Home: NextPage = () => {
           </div>
         )}
         {!user && (
-          <div className="my-4 flex justify-between text-4xl font-bold transition hover:text-red-500">
-            <button disabled>TEST</button>
+          <div className="my-4 flex justify-between text-4xl font-bold text-red-500 transition">
+            <button disabled className="flex justify-center">
+              TEST
+            </button>
           </div>
         )}
         <div className="my-4 flex justify-between text-4xl font-bold transition hover:scale-110 hover:text-gray-800">

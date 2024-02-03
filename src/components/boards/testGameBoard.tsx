@@ -38,7 +38,6 @@ const TestGameBoard: React.FC = () => {
   });
 
   const postTestScore = api.score.createScore.useMutation();
-  const checkLeaderBoard = api.leaderBoard.checkLeaderBoard.useMutation();
 
   useEffect(() => {
     getTestQuestions;
@@ -71,19 +70,11 @@ const TestGameBoard: React.FC = () => {
   };
 
   const handlePostScore = (user: UserType, time: number) => {
-    postTestScore.mutate(
-      {
-        username: user.username,
-        userId: user.userId,
-        time: time,
-      },
-      {
-        onSuccess(data) {
-          const { score } = data.data;
-          checkLeaderBoard.mutate(score);
-        },
-      }
-    );
+    postTestScore.mutate({
+      username: user.username,
+      userId: user.userId,
+      time: time,
+    });
   };
 
   const handleGameStart = () => {
